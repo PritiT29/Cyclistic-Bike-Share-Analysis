@@ -48,9 +48,9 @@ Usage is highly seasonal and temperature-dependent.
 
 Peak activity occurs between 60°F and 80°F. Conversion marketing should be maximized during these "Goldilocks" months (May–September).
 
-Recommendations
-Digital Out-of-Home (DOOH) Ads: Place ads near top casual start stations in Chelsea and the Lower East Side.
+Recommendations:
+1. Digital Out-of-Home (DOOH) Ads: Place ads near top casual start stations in Chelsea and the Lower East Side.
 
-Summer Membership Pass: Introduce a "Summer-Only" membership to bridge the gap for casual riders active during high-temperature months.
+2. Summer Membership Pass: Introduce a "Summer-Only" membership to bridge the gap for casual riders active during high-temperature months.
 
-App Gamification: Offer "Commuter Rewards" for trips taken during weekday rush hours to appeal to the subscriber demographic.
+3. App Gamification: Offer "Commuter Rewards" for trips taken during weekday rush hours to appeal to the subscriber demographic.
