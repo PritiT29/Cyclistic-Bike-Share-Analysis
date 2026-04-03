@@ -20,6 +20,15 @@ Processing: SQL (BigQuery/PostgreSQL) for data cleaning and aggregation.
 
 Visualization: Tableau Public [https://public.tableau.com/views/CyclisticStationDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link]
 
+Visualizations Included
+Users by Neighbourhood: A bar hierarchy showing the most popular start/end locations.
+
+Trip vs. Minute Distribution: Pie charts comparing total volume against total time spent.
+
+Station Matrix: A breakdown of Borough-to-Borough movement.
+
+Climate Trend Analysis: A dual-line chart showing how temperature impacts daily trip counts.
+
 Documentation: Markdown
 
 📊 Key Insights from Analysis
@@ -37,3 +46,10 @@ Trips are highly localized; most rides start and end within the same borough, re
 Usage is highly seasonal and temperature-dependent.
 
 Peak activity occurs between 60°F and 80°F. Conversion marketing should be maximized during these "Goldilocks" months (May–September).
+
+Recommendations
+Digital Out-of-Home (DOOH) Ads: Place ads near top casual start stations in Chelsea and the Lower East Side.
+
+Summer Membership Pass: Introduce a "Summer-Only" membership to bridge the gap for casual riders active during high-temperature months.
+
+App Gamification: Offer "Commuter Rewards" for trips taken during weekday rush hours to appeal to the subscriber demographic.
