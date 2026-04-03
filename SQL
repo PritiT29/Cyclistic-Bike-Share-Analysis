@@ -1,0 +1,58 @@
+--Total Trips and Minutes by User Type
+--This query powers the two pie charts (Users by Trips and Users by Minutes).
+
+SELECT 
+    member_casual AS user_type,
+    COUNT(ride_id) AS total_trips,
+    SUM(TIMESTAMP_DIFF(ended_at, started_at, MINUTE)) AS total_minutes
+FROM `cyclistic_trips`
+GROUP BY user_type;
+
+--Trips by Neighborhood (Flow Analysis)
+--This query mimics the Users by Neighbourhood bar chart, showing where people start and where they eventually end up.
+
+SELECT 
+    start_neighborhood,
+    end_neighborhood,
+    COUNT(ride_id) AS trip_count
+FROM `cyclistic_trips`
+WHERE start_neighborhood IS NOT NULL
+GROUP BY start_neighborhood, end_neighborhood
+ORDER BY trip_count DESC
+LIMIT 10;
+
+--Station & Borough Matrix
+--This generates the data for the Users by Stations table, showing the movement between boroughs (Brooklyn, Manhattan, Queens).
+
+SELECT 
+    start_borough,
+    end_borough,
+    member_casual AS user_type,
+    COUNT(ride_id) AS trip_count
+FROM `cyclistic_trips`
+GROUP BY start_borough, end_borough, user_type
+ORDER BY start_borough, trip_count DESC;
+
+--Climate vs. Trip Volume
+--This query produces the data for the Users by Climate line chart at the bottom right.
+
+SELECT 
+    ROUND(day_mean_temp, 0) AS temperature,
+    member_casual AS user_type,
+    COUNT(ride_id) AS trip_count
+FROM `cyclistic_trips`
+GROUP BY temperature, user_type
+ORDER BY temperature ASC;
+
+--Tree Map Data (Neighborhood & Zip Code)
+--For the complex Tree Map on the bottom left, you need a deeper hierarchy.
+
+SELECT 
+    member_casual AS user_type,
+    start_borough,
+    start_neighborhood,
+    start_zip_code,
+    COUNT(ride_id) AS trip_count
+FROM `cyclistic_trips`
+GROUP BY user_type, start_borough, start_neighborhood, start_zip_code
+ORDER BY trip_count DESC;
