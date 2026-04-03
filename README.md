@@ -16,7 +16,7 @@ The raw data used for this analysis is provided by **Citi Bike New York** and is
 Dataset: [Citi Bike Trip Histories](https://citibikenyc.com/system-data)
 Scope: This analysis focuses on trip data within the Manhattan borough, specifically targeting the Chelsea and Clinton neighborhoods.
 
-Processing: SQL (BigQuery/PostgreSQL) for data cleaning and aggregation:
+Processing: SQL (BigQuery/PostgreSQL) for data cleaning and aggregation:[https://github.com/PritiT29/Cyclistic-Bike-Share-Analysis/blob/a0d07e23ab3c273734c275bb8c8702a060047015/Data%20Cleaning%20and%20Transformation]
 Data Analysis:[https://github.com/PritiT29/Cyclistic-Bike-Share-Analysis/blob/c46a8159c60e03395902587623c0b173da9de141/Data%20Analysis%20SQL]
 
 Visualization: Tableau Public [https://public.tableau.com/views/CyclisticStationDashboard/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link]
