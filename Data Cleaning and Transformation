@@ -1,0 +1,82 @@
+--Data Cleaning Script
+--This step removes "bad" data that would skew the averages (like bikes being serviced or system errors).
+
+-- Create a cleaned table for analysis
+CREATE OR REPLACE TABLE `project.cyclistic_nyc.cleaned_trips` AS
+SELECT 
+    ride_id,
+    rideable_type,
+    started_at,
+    ended_at,
+    -- Calculate ride length in minutes
+    TIMESTAMP_DIFF(ended_at, started_at, MINUTE) AS ride_length_mins,
+    -- Extract date parts for time-series analysis
+    EXTRACT(DAYOFWEEK FROM started_at) AS day_of_week,
+    EXTRACT(MONTH FROM started_at) AS month,
+    start_station_name,
+    end_station_name,
+    start_lat,
+    start_lng,
+    member_casual
+FROM 
+    `project.cyclistic_nyc.raw_data`
+WHERE 
+    -- 1. Remove trips with missing critical data
+    start_station_name IS NOT NULL 
+    AND end_station_name IS NOT NULL
+    -- 2. Remove "test" trips or maintenance entries
+    AND ride_length_mins > 1 
+    AND ride_length_mins < 1440 -- Excludes rides longer than 24 hours
+    -- 3. Ensure dates are logical
+    AND ended_at > started_at;
+
+
+--Neighborhood & Borough Transformation
+--The dashboard relies heavily on Manhattan and Chelsea/Clinton labels. If the raw data only has Station Names, we can use a CASE statement to bucket them into the neighborhoods seen dashboard.
+
+-- Adding Neighborhood and Borough metadata
+CREATE OR REPLACE TABLE `your_project.cyclistic_nyc.final_analysis` AS
+SELECT 
+    *,
+    CASE 
+        WHEN start_station_name LIKE '%8 Ave & W 31 St%' THEN 'Chelsea'
+        WHEN start_station_name LIKE '%W 52 St & 11 Ave%' THEN 'Clinton'
+        WHEN start_station_name LIKE '%Broadway%' THEN 'Midtown'
+        ELSE 'Other Manhattan'
+    END AS start_neighborhood,
+    
+    -- Defining the Borough based on coordinates or station names
+    CASE 
+        WHEN start_lat > 40.70 AND start_lat < 40.87 AND start_lng > -74.02 AND start_lng < -73.91 THEN 'Manhattan'
+        WHEN start_lat < 40.70 THEN 'Brooklyn'
+        ELSE 'Other'
+    END AS start_borough
+FROM 
+    `project.cyclistic_nyc.cleaned_trips`;
+
+
+-- Aggregation for Tableau (Optional)
+--If dataset is too large for Tableau Public (which has a 15GB limit), we can pre-aggregate the data in SQL to make the dashboard faster.
+
+-- Aggregate by hour, user type, and neighborhood
+SELECT 
+    member_casual,
+    start_neighborhood,
+    start_borough,
+    EXTRACT(HOUR FROM started_at) AS hour_of_day,
+    AVG(ride_length_mins) AS avg_duration,
+    COUNT(*) AS total_trips
+FROM 
+    `project.cyclistic_nyc.final_analysis`
+GROUP BY 
+    1, 2, 3, 4;
+
+
+--Summary of Transformations Applied:
+Calculated Field: Created ride_length_mins for duration analysis.
+
+Data Validation: Filtered out rides under 60 seconds (likely accidental docks) and over 24 hours.
+
+Categorization: Grouped specific stations into "Chelsea" and "Clinton" to match the neighborhood filter.
+
+Time Extraction: Isolated Day of Week and Month to allow for the seasonal trends shown in climate chart.
